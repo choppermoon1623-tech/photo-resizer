@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Batch Resizer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="Photo batch resizer">
+        <header class="topbar">
+          <div>
+            <p class="kicker">Local image tool</p>
+            <h1>写真一括リサイズ</h1>
+          </div>
+          <button class="icon-button" id="clearButton" type="button" title="リセット" aria-label="リセット">
+            <span aria-hidden="true">↺</span>
+          </button>
+        </header>
+
+        <div class="tool-grid">
+          <section class="drop-panel" id="dropZone">
+            <input id="fileInput" type="file" accept="image/*" multiple />
+            <div class="drop-copy">
+              <div class="upload-mark" aria-hidden="true">+</div>
+              <h2>画像をここへドロップ</h2>
+              <p>またはクリックして複数選択</p>
+            </div>
+          </section>
+
+          <aside class="settings" aria-label="変換設定">
+            <div class="field-row two">
+              <label>
+                最大幅
+                <input id="maxWidth" type="number" min="1" max="12000" value="1600" />
+              </label>
+              <label>
+                最大高さ
+                <input id="maxHeight" type="number" min="1" max="12000" value="1600" />
+              </label>
+            </div>
+
+            <div class="field-row">
+              <label>
+                出力形式
+                <select id="format">
+                  <option value="image/jpeg">JPEG</option>
+                  <option value="image/png">PNG</option>
+                  <option value="image/webp">WebP</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="field-row">
+              <label class="range-label" for="quality">
+                <span>画質</span>
+                <output id="qualityOutput" for="quality">82%</output>
+              </label>
+              <input id="quality" type="range" min="40" max="100" value="82" />
+            </div>
+
+            <div class="field-row">
+              <label class="check-row">
+                <input id="noUpscale" type="checkbox" checked />
+                小さい画像は拡大しない
+              </label>
+            </div>
+
+            <button id="processButton" class="primary-button" type="button" disabled>
+              一括変換
+            </button>
+          </aside>
+        </div>
+
+        <section class="status-band" aria-live="polite">
+          <div>
+            <span class="status-label">選択</span>
+            <strong id="fileCount">0枚</strong>
+          </div>
+          <div>
+            <span class="status-label">元サイズ</span>
+            <strong id="sourceSize">0 MB</strong>
+          </div>
+          <div>
+            <span class="status-label">変換後</span>
+            <strong id="outputSize">未変換</strong>
+          </div>
+        </section>
+
+        <section class="results" aria-label="画像一覧">
+          <div class="result-head">
+            <h2>プレビュー</h2>
+            <button id="downloadZipButton" class="secondary-button" type="button" disabled>
+              ZIPで保存
+            </button>
+          </div>
+          <div id="emptyState" class="empty-state">まだ画像が選択されていません。</div>
+          <div id="imageList" class="image-list"></div>
+        </section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
